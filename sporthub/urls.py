@@ -27,9 +27,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('login/', accountViews.user_login, name='login'),
-    path('register/', views.register, name='register'),
+    path('register/', accountViews.user_registration, name='register'),
     path('forgot-password/', views.forgot_password, name='forgot-password'),
     path('dashboard/', accountViews.user_dashboard, name='dashboard'),
+    path('edit/', accountViews.edit, name='edit'),
 
     path('settings/', views.settings, name='settings'),
 ]

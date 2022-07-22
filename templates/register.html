@@ -1,4 +1,4 @@
-{% extends "base_login.html" %}
+{% extends "base_account.html" %}
 {% load static %}
 
 {% block title %}Register - KarateLog {% endblock title %}
@@ -14,26 +14,31 @@
                         <div class="text-center">
                             <h4 class="text-dark mb-4">Create an Account!</h4>
                         </div>
-                        <form class="user">
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                {{ form.errors }}
+                            </div>
+                         {% endif %}
+                        <form class="user" action="." method="post">
+                            <div class="row mb-3">
+                                <div class="col-sm-12 mb-6 mb-sm-0">
+                                    {{ form.username }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-12 mb-6 mb-sm-0">
+                                    {{ form.email }}
+                                </div>
+                            </div>
                             <div class="row mb-3">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input class="form-control form-control-user" type="text" id="exampleFirstName" placeholder="First Name" name="first_name">
+                                    {{ form.password }}
                                 </div>
                                 <div class="col-sm-6">
-                                    <input class="form-control form-control-user" type="text" id="exampleFirstName" placeholder="Last Name" name="last_name">
+                                    {{ form.password2 }}
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Email Address" name="email">
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input class="form-control form-control-user" type="password" id="examplePasswordInput" placeholder="Password" name="password">
-                                </div>
-                                <div class="col-sm-6">
-                                    <input class="form-control form-control-user" type="password" id="exampleRepeatPasswordInput" placeholder="Repeat Password" name="password_repeat">
-                                </div>
-                            </div>
+                            {% csrf_token %}
                             <button class="btn btn-primary d-block btn-user w-100" type="submit">Register Account</button>
                             <!--
                             <hr>
