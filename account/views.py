@@ -50,7 +50,6 @@ def user_dashboard(request):
 
 @login_required
 def edit_profile(request):
-    print(request.method)
     if request.method == 'POST':
         user_form = UserEditFrom(
             instance=request.user,

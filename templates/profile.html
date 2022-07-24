@@ -64,7 +64,8 @@
                                 <form class="profile" action="." method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="text-center">
-                                            <img class="rounded-circle mb-3 mt-4" src="{%static "img/dogs/image2.jpeg" %}" width="160" height="160">
+                                            <!--<img class="rounded-circle mb-3 mt-4" src="{%static "img/dogs/image2.jpeg" %}" width="160" height="160">-->
+                                            <img class="rounded-circle mb-3 mt-4" src="{{ user.profile.photo.url }}" width="160" height="160">
                                             <br>
                                             {{ profile_form.photo }}
                                         </div>

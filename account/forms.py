@@ -118,6 +118,7 @@ class ProfileEditFrom(forms.ModelForm):
             attrs={
                 'class': 'form-control form-control-user',
                 'type': 'text',
+                'required': '',
                 'name': 'country'
             }
         ))
@@ -126,6 +127,7 @@ class ProfileEditFrom(forms.ModelForm):
             attrs={
                 'class': 'form-control form-control-user',
                 'type': 'text',
+                'required': '',
                 'name': 'city'
             }
         ))
@@ -134,6 +136,7 @@ class ProfileEditFrom(forms.ModelForm):
             attrs={
                 'class': 'form-control form-control-user',
                 'type': 'text',
+                'required': '',
                 'name': 'address'
             }
         ))
@@ -142,6 +145,7 @@ class ProfileEditFrom(forms.ModelForm):
             attrs={
                 'class': 'form-control form-control-user',
                 'type': 'text',
+                'required': '',
                 'name': 'phone'
             }
         ))
@@ -152,7 +156,7 @@ class ProfileEditFrom(forms.ModelForm):
                 'class': 'form-control form-control-user',
                 'type': 'date',
                 'placeholder': 'Select a Date of Birth',
-                'reqired': '',
+                'required': '',
                 'name': 'date_of_birth'
             }
         ))
@@ -161,16 +165,18 @@ class ProfileEditFrom(forms.ModelForm):
             attrs={
                 'class': 'form-control form-control-user',
                 'type': 'text',
+                'required': '',
                 'name': 'gender'
             }
         ))
     photo = forms.ImageField(
         widget=forms.FileInput(
-                attrs={
-                    'class': 'btn btn-primary btn-sm',
-                    'accept': 'image/'
-                }
-            ))
+            attrs={
+                'class': 'btn btn-primary btn-sm',
+                'required': '',
+                'accept': 'image/'
+            }
+        ))
 
     class Meta:
         model = Profile
