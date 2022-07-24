@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm, RegistrationForm, UserEditFrom, ProfileEditeFrom
+from .forms import LoginForm, RegistrationForm, UserEditFrom, ProfileEditFrom
 from .models import Profile
 
 
@@ -49,24 +49,40 @@ def user_dashboard(request):
 
 
 @login_required
-def edit(request):
+def edit_profile(request):
+    print(request.method)
     if request.method == 'POST':
         user_form = UserEditFrom(
             instance=request.user,
             data=request.POST
         )
-        profile_form = ProfileEditeFrom(
+        profile_form = ProfileEditFrom(
             instance=request.user.profile,
             data=request.POST,
             files=request.FILES
         )
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid():
             user_form.save()
+        if profile_form.is_valid():
             profile_form.save()
+        if user_form.is_valid() or profile_form.is_valid():
+            return render(request,
+                          'profile.html',
+                          {'user_form': user_form,
+                           'profile_form': profile_form})
+        else:
+            user_form = UserEditFrom(instance=request.user)
+            profile_form = ProfileEditFrom(instance=request.user.profile)
+            return render(request,
+                          'profile.html',
+                          {'user_form': user_form,
+                           'profile_form': profile_form})
     else:
         user_form = UserEditFrom(instance=request.user)
-        profile_form = ProfileEditeFrom(instance=request.user.profile)
+        profile_form = ProfileEditFrom(instance=request.user.profile)
         return render(request,
                       'profile.html',
                       {'user_form': user_form,
                        'profile_form': profile_form})
+
+

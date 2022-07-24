@@ -1,5 +1,5 @@
 from django import forms
-from django.core.validators import validate_email
+from django.contrib.admin.widgets import AdminDateWidget
 from django.contrib.auth.models import User
 from .models import Profile
 
@@ -74,12 +74,104 @@ class RegistrationForm(forms.ModelForm):
 
 
 class UserEditFrom(forms.ModelForm):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'name': 'username'
+            }
+        ))
+    email = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'name': 'email'
+            }
+        ))
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'name': 'first_name'
+            }
+        ))
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'name': 'last_name'
+            }
+        ))
+
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email')
+        fields = ('username', 'first_name', 'last_name', 'email')
 
 
-class ProfileEditeFrom(forms.ModelForm):
+class ProfileEditFrom(forms.ModelForm):
+    country = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'name': 'country'
+            }
+        ))
+    city = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'name': 'city'
+            }
+        ))
+    address = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'name': 'address'
+            }
+        ))
+    phone = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'name': 'phone'
+            }
+        ))
+    date_of_birth = forms.DateField(
+        widget=forms.DateInput(
+            format=('%Y-%m-%d'),
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'date',
+                'placeholder': 'Select a Date of Birth',
+                'reqired': '',
+                'name': 'date_of_birth'
+            }
+        ))
+    gender = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'name': 'gender'
+            }
+        ))
+    photo = forms.ImageField(
+        widget=forms.FileInput(
+                attrs={
+                    'class': 'btn btn-primary btn-sm',
+                    'accept': 'image/'
+                }
+            ))
+
     class Meta:
         model = Profile
-        fields = ('date_of_birth', 'photo')
+        fields = ('country', 'city', 'address', 'gender', 'date_of_birth', 'phone', 'photo')
