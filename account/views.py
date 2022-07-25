@@ -1,6 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm, RegistrationForm, UserEditFrom, ProfileEditFrom
 from .models import Profile
@@ -12,7 +13,6 @@ def user_login(request):
         if form.is_valid():
             cd = form.cleaned_data
             user = authenticate(username=cd['username'], password=cd['password'])
-            print(user)
             if user is not None:
                 if user.is_active:
                     login(request, user)
@@ -26,6 +26,11 @@ def user_login(request):
     return render(request, 'login.html', {'form': form})
 
 
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/login')
+
+
 def user_registration(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -37,7 +42,11 @@ def user_registration(request):
             # Save the User object
             new_user.save()
             profile = Profile.objects.create(user=new_user)
-            return render(request, 'dashboard.html', {'user': new_user})
+            new_user = authenticate(username=form.cleaned_data['username'],
+                                    password=form.cleaned_data['password'],
+                                    )
+            login(request, new_user)
+            return HttpResponseRedirect("/profile")
     else:
         form = RegistrationForm()
     return render(request, 'register.html', {'form' : form})
@@ -51,37 +60,51 @@ def user_dashboard(request):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        user_form = UserEditFrom(
-            instance=request.user,
-            data=request.POST
-        )
         profile_form = ProfileEditFrom(
             instance=request.user.profile,
             data=request.POST,
             files=request.FILES
         )
-        if user_form.is_valid():
-            user_form.save()
         if profile_form.is_valid():
             profile_form.save()
-        if user_form.is_valid() or profile_form.is_valid():
+            #messages.success(request, 'Profile updated successfully')
             return render(request,
                           'profile.html',
-                          {'user_form': user_form,
-                           'profile_form': profile_form})
+                          {'profile_form': profile_form})
         else:
-            user_form = UserEditFrom(instance=request.user)
-            profile_form = ProfileEditFrom(instance=request.user.profile)
+            #messages.error(request, 'Error updating your profile')
             return render(request,
                           'profile.html',
-                          {'user_form': user_form,
-                           'profile_form': profile_form})
+                          {'profile_form': profile_form})
     else:
-        user_form = UserEditFrom(instance=request.user)
         profile_form = ProfileEditFrom(instance=request.user.profile)
         return render(request,
                       'profile.html',
-                      {'user_form': user_form,
-                       'profile_form': profile_form})
+                      {'profile_form': profile_form})
+
+
+@login_required
+def edit_account(request):
+    if request.method == 'POST':
+        user_form = UserEditFrom(
+            instance=request.user,
+            data=request.POST
+        )
+        if user_form.is_valid():
+            user_form.save()
+            #messages.success(request, 'User updated successfully')
+            return render(request,
+                          'account.html',
+                          {'user_form': user_form})
+        else:
+            #messages.error(request, 'Error updating your profile')
+            return render(request,
+                          'account.html',
+                          {'user_form': user_form})
+    else:
+        user_form = UserEditFrom(instance=request.user)
+        return render(request,
+                      'account.html',
+                      {'user_form': user_form})
 
 

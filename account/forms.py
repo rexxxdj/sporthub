@@ -91,6 +91,7 @@ class UserEditFrom(forms.ModelForm):
             }
         ))
     first_name = forms.CharField(
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control form-control-user',
@@ -99,6 +100,7 @@ class UserEditFrom(forms.ModelForm):
             }
         ))
     last_name = forms.CharField(
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control form-control-user',
@@ -114,67 +116,69 @@ class UserEditFrom(forms.ModelForm):
 
 class ProfileEditFrom(forms.ModelForm):
     country = forms.CharField(
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control form-control-user',
                 'type': 'text',
-                'required': '',
                 'name': 'country'
             }
         ))
     city = forms.CharField(
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control form-control-user',
                 'type': 'text',
-                'required': '',
                 'name': 'city'
             }
         ))
     address = forms.CharField(
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control form-control-user',
                 'type': 'text',
-                'required': '',
                 'name': 'address'
             }
         ))
     phone = forms.CharField(
+        required=False,
         widget=forms.TextInput(
             attrs={
                 'class': 'form-control form-control-user',
                 'type': 'text',
-                'required': '',
                 'name': 'phone'
             }
         ))
     date_of_birth = forms.DateField(
+        required=False,
         widget=forms.DateInput(
             format=('%Y-%m-%d'),
             attrs={
                 'class': 'form-control form-control-user',
                 'type': 'date',
                 'placeholder': 'Select a Date of Birth',
-                'required': '',
                 'name': 'date_of_birth'
             }
         ))
     gender = forms.CharField(
-        widget=forms.TextInput(
+        required=False,
+        widget=forms.Select(
+            choices=Profile.GENDER_CHOICES,
             attrs={
                 'class': 'form-control form-control-user',
                 'type': 'text',
-                'required': '',
                 'name': 'gender'
             }
         ))
     photo = forms.ImageField(
+        required=False,
         widget=forms.FileInput(
             attrs={
                 'class': 'btn btn-primary btn-sm',
-                'required': '',
-                'accept': 'image/'
+                'accept': 'image/',
+                'title': ' '
             }
         ))
 

@@ -5,10 +5,6 @@ def index(request):
     return redirect('/login')
 
 
-def register(request):
-    return render(request, 'register.html', {})
-
-
 def forgot_password(request):
     return render(request, 'forgot-password.html', {})
 

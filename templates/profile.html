@@ -4,68 +4,26 @@
 {% block title %}Edit Profile - KarateLog {% endblock title %}
 {% block content %}
     <div class="container-fluid">
-        <h3 class="text-dark mb-4">Profile</h3>
         <div class="row mb-3">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="row">
                     <div class="col">
                         <div class="card shadow mb-3">
                             <div class="card-header py-3">
-                                <p class="text-primary m-0 fw-bold">User Settings</p>
+                                <p class="text-primary m-0 fw-bold">Profile Settings</p>
                             </div>
                             <div class="card-body shadow">
-                                <form class="user" action="." method="post">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="mb-3">
-                                                <label class="form-label" for="username"><strong>Username</strong></label>
-                                                {{ user_form.username }}
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="mb-3">
-                                                <label class="form-label" for="email"><strong>Email Address</strong></label>
-                                                {{ user_form.email }}
-                                            </div>
-                                        </div>
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ form.errors }}
                                     </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="mb-3">
-                                                <label class="form-label" for="first_name"><strong>First Name</strong></label>
-                                                {{ user_form.first_name }}
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="mb-3">
-                                                <label class="form-label" for="last_name"><strong>Last Name</strong></label>
-                                                {{ user_form.last_name }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% csrf_token %}
-                                    <div class="mb-3 text-center">
-                                        <button class="btn btn-primary btn-sm" type="submit">Save Settings</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col">
-                        <div class="card shadow mb-3">
-                            <div class="card-header py-3">
-                                <p class="text-primary m-0 fw-bold">User Settings</p>
-                            </div>
-                            <div class="card-body shadow">
+                                {% endif %}
                                 <form class="profile" action="." method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="text-center">
-                                            <!--<img class="rounded-circle mb-3 mt-4" src="{%static "img/dogs/image2.jpeg" %}" width="160" height="160">-->
-                                            <img class="rounded-circle mb-3 mt-4" src="{{ user.profile.photo.url }}" width="160" height="160">
+                                            {% if user.profile.photo.url is not null %}
+                                                <img class="rounded-circle mb-3 mt-4" src="{{ user.profile.photo.url }}" width="160" height="160">
+                                            {% endif %}
                                             <br>
                                             {{ profile_form.photo }}
                                         </div>
@@ -97,8 +55,7 @@
                                                 <label class="form-label" for="gender"><strong>Gender</strong></label>
                                                 <p>
                                                     <select name="gender" id="id_gender">
-                                                        <option value="M">Male</option>
-                                                        <option value="F">Female</option>
+                                                        <option value={{ profile_form.gender }}</option>
                                                     </select>
                                                 </p>
                                             </div>
