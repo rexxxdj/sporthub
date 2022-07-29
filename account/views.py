@@ -46,6 +46,7 @@ def user_registration(request):
                                     password=form.cleaned_data['password'],
                                     )
             login(request, new_user)
+            messages.success(request, 'New user was created')
             return HttpResponseRedirect("/profile")
     else:
         form = RegistrationForm()
@@ -67,12 +68,12 @@ def edit_profile(request):
         )
         if profile_form.is_valid():
             profile_form.save()
-            #messages.success(request, 'Profile updated successfully')
+            messages.success(request, 'Profile updated successfully')
             return render(request,
                           'profile.html',
                           {'profile_form': profile_form})
         else:
-            #messages.error(request, 'Error updating your profile')
+            messages.error(request, 'Error updating your profile')
             return render(request,
                           'profile.html',
                           {'profile_form': profile_form})
@@ -92,12 +93,12 @@ def edit_account(request):
         )
         if user_form.is_valid():
             user_form.save()
-            #messages.success(request, 'User updated successfully')
+            messages.success(request, 'User updated successfully')
             return render(request,
                           'account.html',
                           {'user_form': user_form})
         else:
-            #messages.error(request, 'Error updating your profile')
+            messages.error(request, 'Error updating your profile')
             return render(request,
                           'account.html',
                           {'user_form': user_form})

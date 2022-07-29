@@ -12,6 +12,13 @@
 </head>
 <body class="bg-gradient-primary">
     <div class="container">
+        {% if messages %}
+            <div class="alert alert-success" role="alert">
+                {% for message in messages %}
+                  {{ message }}
+                {% endfor %}
+            </div>
+        {% endif %}
         {% block content %}{% endblock content %}
     </div>
     <script src="{%static "js/bootstrap.min.js" %}"></script>
