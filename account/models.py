@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date
 from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -49,3 +50,14 @@ class Profile(models.Model):
 
     def __str__(self):
         return 'Profile for user {}'.format(self.user.username)
+
+    def fullname(self):
+        return '{} {}'.format(self.user.last_name, self.user.first_name)
+
+    def username(self):
+        return self.user.username
+
+    def age(self):
+        today = date.today()
+        if self.date_of_birth:
+            return today.year - self.date_of_birth.year - ((today.month, today.day) < (self.date_of_birth.month, self.date_of_birth.day))
