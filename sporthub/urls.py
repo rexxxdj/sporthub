@@ -34,7 +34,7 @@ urlpatterns = [
     path('profile/', accountViews.edit_profile, name='edit_profile'),
     path('account/', accountViews.edit_account, name='edit_account'),
 
-    path('club/', views.club_list, name='club'),
+    path('club/', views.ProfileListView.as_view(), name='team'),
 
     path('settings/', views.settings, name='settings'),
 ]
