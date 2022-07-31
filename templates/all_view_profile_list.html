@@ -14,11 +14,14 @@
                 <thead>
                 <tr>
                     <th scope="col" class="border-0 text-uppercase font-medium pl-4">#</th>
-                    <th scope="col" class="border-0 text-uppercase font-medium">Full Name</th>
+                    <th scope="col" class="border-0"></th>
+                    <th scope="col" class="border-0 text-uppercase font-medium">Name</th>
                     <th scope="col" class="border-0 text-uppercase font-medium">Date of Birth</th>
                     <th scope="col" class="border-0 text-uppercase font-medium">Gender</th>
                     <th scope="col" class="border-0 text-uppercase font-medium">Degree</th>
-                    <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
+                    {% if user.is_staff %}
+                        <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -27,10 +30,12 @@
                     <td class="pl-4">1</td>
                     <td>
                         {% if profile.photo.url is not null %}
-                        <img class="rounded-circle me-2" width="30" height="30" src="{{ profile.photo.url }}">
+                            <img class="rounded-circle me-2" width="30" height="30" src="{{ profile.photo.url }}">
                         {% else %}
-                        <img class="rounded-circle me-2" width="30" height="30" src="{%static "img/avatars/nophoto.jpeg" %}">
+                            <img class="rounded-circle me-2" width="30" height="30" src="{%static "img/avatars/nophoto.jpeg" %}">
                         {% endif %}
+                    </td>
+                    <td>
                         <h5 class="font-medium mb-0">{{profile.fullname}}</h5>
                         <span class="text-muted">{{profile.username}}</span>
                     </td>
@@ -44,11 +49,17 @@
                     <td>
                         <span class="text-muted">{{profile.degree}}</span><br>
                     </td>
-                    <td>
-                        <button type="button" class="btn btn-outline-success btn-circle btn-lg btn-circle"><i class="fa fa-edit"></i> </button>
-                        <button type="button" class="btn btn-outline-danger btn-circle btn-lg btn-circle ml-2"><i class="fa fa-trash"></i> </button>
-                        <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i class="fa fa-upload"></i> </button>
-                    </td>
+                    {% if user.is_staff %}
+                        <td>
+                            {% if perms.auth.change_user %}
+                                <button type="button" class="btn btn-outline-success btn-circle btn-lg btn-circle"><i class="fa fa-edit"></i> </button>
+                            {% endif %}
+                            {% if perms.auth.delete_user %}
+                                <button type="button" class="btn btn-outline-danger btn-circle btn-lg btn-circle ml-2"><i class="fa fa-trash"></i> </button>
+                            {% endif %}
+                            <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i class="fa fa-upload"></i> </button>
+                        </td>
+                    {% endif %}
                 </tr>
                 {% endfor %}
                 </tbody>

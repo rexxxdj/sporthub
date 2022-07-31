@@ -28,7 +28,6 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('register/', accountViews.user_registration, name='register'),
     path('forgot-password/', views.forgot_password, name='forgot-password'),
-    path('dashboard/', accountViews.user_dashboard, name='dashboard'),
     path('account/', include('account.urls', namespace='account')),
 
     path('club/', views.ProfileListView.as_view(), name='club'),

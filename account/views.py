@@ -16,7 +16,7 @@ def user_login(request):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return redirect('/dashboard')
+                    return redirect('/account/dashboard')
                 else:
                     return HttpResponse('Disabled account')
             else:
@@ -28,7 +28,7 @@ def user_login(request):
 
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect('/login')
+    return HttpResponseRedirect('/account/login')
 
 
 def user_registration(request):
@@ -54,7 +54,7 @@ def user_registration(request):
 
 
 @login_required
-def user_dashboard(request):
+def account_dashboard(request):
     return render(request, 'account_view_dashboard.html')
 
 
@@ -85,7 +85,12 @@ def edit_profile(request):
 
 
 @login_required
-def edit_account(request):
+def account(request):
+    return redirect('user_edit/')
+
+
+@login_required
+def edit_user(request):
     if request.method == 'POST':
         user_form = UserEditFrom(
             instance=request.user,
