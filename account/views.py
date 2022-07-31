@@ -23,7 +23,7 @@ def user_login(request):
                 return HttpResponse('Invalid login')
     else:
         form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'auth_login.html', {'form': form})
 
 
 def user_logout(request):
@@ -50,12 +50,12 @@ def user_registration(request):
             return HttpResponseRedirect("/profile")
     else:
         form = RegistrationForm()
-    return render(request, 'register.html', {'form' : form})
+    return render(request, 'auth_register.html', {'form' : form})
 
 
 @login_required
 def user_dashboard(request):
-    return render(request, 'dashboard.html')
+    return render(request, 'account_view_dashboard.html')
 
 
 @login_required
@@ -70,17 +70,17 @@ def edit_profile(request):
             profile_form.save()
             messages.success(request, 'Profile updated successfully')
             return render(request,
-                          'profile.html',
+                          'account_edit_profile.html',
                           {'profile_form': profile_form})
         else:
             messages.error(request, 'Error updating your profile')
             return render(request,
-                          'profile.html',
+                          'account_edit_profile.html',
                           {'profile_form': profile_form})
     else:
         profile_form = ProfileEditFrom(instance=request.user.profile)
         return render(request,
-                      'profile.html',
+                      'account_edit_profile.html',
                       {'profile_form': profile_form})
 
 
@@ -95,17 +95,17 @@ def edit_account(request):
             user_form.save()
             messages.success(request, 'User updated successfully')
             return render(request,
-                          'account.html',
+                          'account_edit_user.html',
                           {'user_form': user_form})
         else:
             messages.error(request, 'Error updating your profile')
             return render(request,
-                          'account.html',
+                          'account_edit_user.html',
                           {'user_form': user_form})
     else:
         user_form = UserEditFrom(instance=request.user)
         return render(request,
-                      'account.html',
+                      'account_edit_user.html',
                       {'user_form': user_form})
 
 

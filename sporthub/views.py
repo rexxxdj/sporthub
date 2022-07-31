@@ -6,11 +6,11 @@ from account.models import Profile
 
 
 def index(request):
-    return redirect('/login')
+    return redirect('account/login')
 
 
 def forgot_password(request):
-    return render(request, 'forgot-password.html', {})
+    return render(request, 'auth_forgot-password.html', {})
 
 
 def settings(request):
@@ -19,12 +19,15 @@ def settings(request):
 
 class ProfileListView(ListView):
     model = Profile
-    template_name = "profile_list.html"
+    template_name = "all_view_profile_list.html"
     paginate_by = 10
+
+    def get_queryset(self):
+        return super().get_queryset().exclude(profileType=3) #exclude Couch
 
     def get_context_data(self):
         context = super(ProfileListView, self).get_context_data()
-        context["profilecnt"] = Profile.objects.all().count()
+        #context["profilecnt"] = Profile.objects.all().count()
         return context
 
     #def get_queryset(self):
@@ -35,4 +38,4 @@ class ProfileListView(ListView):
 
 #def club_list(request):
 #    profiles = Profile.objects.all()
-#    return render(request, 'profile_list.html', {'profiles': profiles})
+#    return render(request, 'all_view_profile_list.html', {'profiles': profiles})
