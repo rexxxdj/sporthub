@@ -73,6 +73,74 @@ class RegistrationForm(forms.ModelForm):
         return cd['password2']
 
 
+class AdminUserRegistrationForm(forms.ModelForm):
+    username = forms.CharField(
+        error_messages={'required': 'Enter Your UserName'},
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'name': 'username',
+                'placeholder': 'User Name'
+            }
+        ))
+    email = forms.CharField(
+        error_messages={'required': 'Enter Your Email'},
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'aria-describedby': 'emailHelp',
+                'name': 'email',
+                'placeholder': 'Email Address'
+            }
+        ))
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'name': 'first_name',
+                'placeholder': 'First Name'
+            }
+        ))
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'text',
+                'name': 'last_name',
+                'placeholder': 'Last Name'
+            }
+        ))
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control form-control-user',
+            'type': 'password',
+            'name': 'password',
+            'placeholder': 'Password'
+        }
+    ))
+    password2 = forms.CharField(widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control form-control-user',
+            'type': 'password',
+            'name': 'password2',
+            'placeholder': 'Repeat Password'
+        }
+    ))
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
+
+    def clean_password2(self):
+        cd = self.cleaned_data
+        if cd['password'] != cd['password2']:
+            raise forms.ValidationError('Password don\'t match.')
+        return cd['password2']
+
+
 class UserEditFrom(forms.ModelForm):
     username = forms.CharField(
         widget=forms.TextInput(

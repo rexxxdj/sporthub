@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Add New User - KarateLog {% endblock title %}
+{% block content %}
+    <div class="card shadow-lg o-hidden border-0 my-5">
+        <div class="card-body p-0">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h4 class="text-dark mb-4">Create a New Account!</h4>
+                        </div>
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                {{ form.errors }}
+                            </div>
+                        {% endif %}
+                        <form class="user" action="." method="post">
+                            <p>Account Attributes</p>
+                            <div class="row mb-3">
+                                <div class="col-sm-6 mb-6 mb-sm-0">
+                                    {{ form.username }}
+                                </div>
+                                <div class="col-sm-6 mb-6 mb-sm-0">
+                                    {{ form.email }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-6 mb-6 mb-sm-0">
+                                    {{ form.first_name }}
+                                </div>
+                                <div class="col-sm-6 mb-6 mb-sm-0">
+                                    {{ form.last_name }}
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-6 mb-3 mb-sm-0">
+                                    {{ form.password }}
+                                </div>
+                                <div class="col-sm-6">
+                                    {{ form.password2 }}
+                                </div>
+                            </div>
+                            <hr>
+                            <p>Account Permissions</p>
+                            <div class="row mb-3">
+                                <div class="col-sm-3 mb-3 mb-sm-0">
+                                    <p>Group:</p>
+                                    {% for group in permission_groups %}
+                                        <p>
+                                            <input type="checkbox" id="{{ group.name}}" name="{{ group.name}}" value="{{ group.name}}">
+                                            <label for="{{ group.name}}">{{ group.name}}</label>
+                                        </p>
+                                    {% endfor %}
+                                </div>
+                                <div class="col-sm-3 mb-3 mb-sm-0">
+                                    <p>Status:</p>
+                                    {% for status in user_status %}
+                                        <p>
+                                            <input type="checkbox" id="{{ status.name}}" name="{{ status.name}}" value="{{ status.name}}">
+                                            <label for="{{ status.name}}">{{ status.name}}</label>
+                                        </p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% csrf_token %}
+                            <button class="btn btn-primary d-block btn-user w-100" type="submit" name="submit">Register Account and new Profile</button>
+                            <!--
+                            <hr>
+                                <a class="btn btn-primary d-block btn-google btn-user w-100 mb-2" role="button"><i class="fab fa-google"></i>&nbsp; Register with Google</a>
+                                <a class="btn btn-primary d-block btn-facebook btn-user w-100" role="button"><i class="fab fa-facebook-f"></i>&nbsp; Register with Facebook</a>
+                            <hr>
+                            -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

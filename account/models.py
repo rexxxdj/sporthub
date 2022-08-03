@@ -87,11 +87,10 @@ class Profile(models.Model):
         blank=True,
         null=True
     )
-    profileType = models.ForeignKey(
+    profileType = models.ManyToManyField(
         ProfileType,
         null=True,
-        blank=True,
-        on_delete=models.PROTECT
+        blank=True
     )
 
     def __str__(self):

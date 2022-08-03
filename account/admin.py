@@ -3,10 +3,10 @@ from .models import Profile, ProfileType
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'date_of_birth', 'photo', 'profileType', 'degree']
+    list_display = ['id', 'user', 'date_of_birth', 'photo', 'degree']
     list_display_links = ['user']
-    list_editable = ['date_of_birth', 'profileType', 'degree']
-    ordering = ['id', 'user', 'date_of_birth', 'profileType', 'degree']
+    list_editable = ['date_of_birth', 'degree']
+    ordering = ['id', 'user', 'date_of_birth', 'degree']
     list_filter = ['profileType__typeName', 'degree']
     list_per_page = 10
     search_fields = ['user__username', 'user__first_name', 'user__last_name', 'profileType__typeName']

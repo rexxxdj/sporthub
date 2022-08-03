@@ -19,6 +19,7 @@
                     <th scope="col" class="border-0 text-uppercase font-medium">Date of Birth</th>
                     <th scope="col" class="border-0 text-uppercase font-medium">Gender</th>
                     <th scope="col" class="border-0 text-uppercase font-medium">Degree</th>
+                    <th scope="col" class="border-0 text-uppercase font-medium">Status</th>
                     {% if user.is_staff %}
                         <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
                     {% endif %}
@@ -27,7 +28,7 @@
                 <tbody>
                 {% for profile in object_list %}
                 <tr>
-                    <td class="pl-4">1</td>
+                    <td class="pl-4">{{ forloop.counter }}</td>
                     <td>
                         {% if profile.photo.url is not null %}
                             <img class="rounded-circle me-2" width="30" height="30" src="{{ profile.photo.url }}">
@@ -49,15 +50,26 @@
                     <td>
                         <span class="text-muted">{{profile.degree}}</span><br>
                     </td>
+                    <td>
+                        {% for status in profile.profileType.all %}
+                            <span class="text-muted">{{status}}</span><br>
+                        {% endfor %}
+                    </td>
                     {% if user.is_staff %}
                         <td>
                             {% if perms.auth.change_user %}
-                                <button type="button" class="btn btn-outline-success btn-circle btn-lg btn-circle"><i class="fa fa-edit"></i> </button>
+                                <button type="button" class="btn btn-outline-success btn-circle btn-lg btn-circle">
+                                    <i class="fa fa-edit"></i>
+                                </button>
                             {% endif %}
                             {% if perms.auth.delete_user %}
-                                <button type="button" class="btn btn-outline-danger btn-circle btn-lg btn-circle ml-2"><i class="fa fa-trash"></i> </button>
+                                <button type="button" class="btn btn-outline-danger btn-circle btn-lg btn-circle ml-2">
+                                    <i class="fa fa-trash"></i>
+                                </button>
                             {% endif %}
-                            <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2"><i class="fa fa-upload"></i> </button>
+                            <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2">
+                                <i class="fa fa-upload"></i>
+                            </button>
                         </td>
                     {% endif %}
                 </tr>
@@ -65,6 +77,16 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    <br>
+    <div class="row">
+        {% if perms.auth.add_user %}
+        <a href="/account/admin/user_add">
+            <button type="button" class="btn btn-outline-success btn-circle btn-lg btn-circle">
+                <i class="fa fa-plus"></i>
+            </button>
+        </a>
+        {% endif %}
     </div>
     {% include "include/paginator_include.html" with page=page %}
 </div> 

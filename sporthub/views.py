@@ -24,19 +24,9 @@ class ProfileListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return super().get_queryset().exclude(profileType=3) #exclude Couch
+        return super().get_queryset().exclude(profileType=4) #exclude Couch
 
     def get_context_data(self):
         context = super(ProfileListView, self).get_context_data()
         #context["profilecnt"] = Profile.objects.all().count()
         return context
-
-    #def get_queryset(self):
-    #   profile_id = self.request.GET.get('profile_id', 'None')
-    #    if profile_id:
-    #        profile_list = Profile.objects.filter()
-
-
-#def club_list(request):
-#    profiles = Profile.objects.all()
-#    return render(request, 'all_view_profile_list.html', {'profiles': profiles})
