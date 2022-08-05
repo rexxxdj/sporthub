@@ -21,13 +21,19 @@
                         {% endif %}
                         <form class="user" action="." method="post">
                             <div class="row mb-3">
-                                <div class="col-sm-12 mb-6 mb-sm-0">
+                                <div class="col-sm-6 mb-6 mb-sm-0">
                                     {{ form.username }}
+                                </div>
+                                 <div class="col-sm-6 mb-6 mb-sm-0">
+                                    {{ form.email }}
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-sm-12 mb-6 mb-sm-0">
-                                    {{ form.email }}
+                                <div class="col-sm-6 mb-6 mb-sm-0">
+                                    {{ form.first_name }}
+                                </div>
+                                 <div class="col-sm-6 mb-6 mb-sm-0">
+                                    {{ form.last_name }}
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -49,7 +55,7 @@
                         </form>
                         <hr>
                         <div class="text-center"><a class="small" href="/forgot-password">Forgot Password?</a></div>
-                        <div class="text-center"><a class="small" href="/login">Already have an account? Login!</a></div>
+                        <div class="text-center"><a class="small" href="{% url 'account:account_user_login' %}">Already have an account? Login!</a></div>
                     </div>
                 </div>
             </div>

@@ -23,13 +23,13 @@
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label" for="username"><strong>Username</strong></label>
-                                                {{ user_form.username }}
+                                                {{ form.username }}
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label" for="email"><strong>Email Address</strong></label>
-                                                {{ user_form.email }}
+                                                {{ form.email }}
                                             </div>
                                         </div>
                                     </div>
@@ -37,19 +37,26 @@
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label" for="first_name"><strong>First Name</strong></label>
-                                                {{ user_form.first_name }}
+                                                {{ form.first_name }}
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label" for="last_name"><strong>Last Name</strong></label>
-                                                {{ user_form.last_name }}
+                                                {{ form.last_name }}
                                             </div>
                                         </div>
                                     </div>
                                     {% csrf_token %}
-                                    <div class="mb-3 text-center">
-                                        <button class="btn btn-primary btn-sm" type="submit">Save Settings</button>
+                                    <div class="row">
+                                        <div class="col-sm-3 mb-3 mb-sm-0">
+                                        </div>
+                                        <div class="col-sm-3 mb-3 mb-sm-0">
+                                            <input class="default btn btn-primary d-block btn-user w-100"  type="submit" value="Save" name="_save">
+                                        </div>
+                                        <div class="col-sm-3 mb-3 mb-sm-0">
+                                            <input class="btn btn-primary d-block btn-user w-100" type="submit" value="Save and Edit Profile" name="_continue">
+                                        </div>
                                     </div>
                                 </form>
                             </div>

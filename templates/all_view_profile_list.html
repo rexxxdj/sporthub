@@ -20,7 +20,9 @@
                     <th scope="col" class="border-0 text-uppercase font-medium">Gender</th>
                     <th scope="col" class="border-0 text-uppercase font-medium">Degree</th>
                     <th scope="col" class="border-0 text-uppercase font-medium">Status</th>
-                    <th scope="col" class="border-0 text-uppercase font-medium">Permissions</th>
+                    {% if user.is_staff %}
+                        <th scope="col" class="border-0 text-uppercase font-medium">Permissions</th>
+                    {% endif %}
                     {% if user.is_staff %}
                         <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
                     {% endif %}
@@ -56,11 +58,13 @@
                             <span class="text-muted">{{status}}</span><br>
                         {% endfor %}
                     </td>
-                    <td>
-                        {% for group in profile.user.groups.all %}
-                            <span class="text-muted">{{group}}</span><br>
-                        {% endfor %}
-                    </td>
+                    {% if user.is_staff %}
+                        <td>
+                            {% for group in profile.user.groups.all %}
+                                <span class="text-muted">{{group}}</span><br>
+                            {% endfor %}
+                        </td>
+                    {% endif %}
                     {% if user.is_staff %}
                         <td>
                             {% if perms.auth.change_user %}

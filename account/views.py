@@ -7,32 +7,34 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .forms import LoginForm, RegistrationForm, UserEditFrom, ProfileEditFrom
+from .forms import LoginForm, AccountUserRegistrationForm, AccountUserEditForm, AccountProfileEditFrom
 from .forms import AdminUserRegistrationForm, AdminUserEditForm, AdminProfileEditForm
 from .models import Profile
 
 
 # Account views
-def user_registration(request):
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            # Create a new user object but avoid saving it yet
-            new_user = form.save(commit=False)
-            # Set the chosen password
-            new_user.set_password(form.cleaned_data['password'])
-            # Save the User object
-            new_user.save()
-            profile = Profile.objects.create(user=new_user)
-            new_user = authenticate(username=form.cleaned_data['username'],
-                                    password=form.cleaned_data['password'],
-                                    )
-            login(request, new_user)
-            messages.success(request, 'New user was created')
-            return HttpResponseRedirect("/account")
-    else:
-        form = RegistrationForm()
-    return render(request, 'auth_register.html', {'form': form})
+class AccountUserRegistrationView(CreateView):
+    model = User
+    template_name = 'auth_registration.html'
+    form_class = AccountUserRegistrationForm
+
+    def get_context_data(self, **kwargs):
+        context = super(AccountUserRegistrationView, self).get_context_data(**kwargs)
+        context["title"] = "User registration"
+        return context
+
+    def form_valid(self, form):
+        new_user = form.save()
+        new_user.set_password(form.cleaned_data['password'])
+        profile = Profile.objects.create(user=new_user)
+        new_user.date_joined = datetime.datetime.now()
+        new_user.is_active = True
+        login(self.request, new_user)
+        messages.success(self.request, 'User {} {} has been successfully added.'.format(form.cleaned_data['first_name'], form.cleaned_data['last_name']))
+        return super(AccountUserRegistrationView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('account:account_profile_edit')
 
 
 def user_login(request):
@@ -54,6 +56,58 @@ def user_login(request):
     return render(request, 'auth_login.html', {'form': form})
 
 
+class AccountUserEditView(UpdateView):
+    model = User
+    template_name = 'account_user_edit.html'
+    form_class = AccountUserEditForm
+
+    @property
+    def has_permission(self):
+        return self.user.is_active
+
+    def get_context_data(self, **kwargs):
+        context = super(AccountUserEditView, self).get_context_data(**kwargs)
+        context["title"] = "User info update"
+        return context
+
+    def form_valid(self, form):
+        user = form.save()
+        messages.success(self.request, 'User {} {} has been successfully updated.'.format(user.first_name, user.last_name))
+        return super(AccountUserEditView, self).form_valid(form)
+
+    def get_success_url(self):
+        if self.request.POST.get('_save'):
+            return reverse_lazy('account:account_user_edit', kwargs={'pk': self.object.pk})
+        if self.request.POST.get('_continue'):
+            return reverse_lazy('account:account_profile_edit', kwargs={'pk': self.object.profile.pk})
+
+
+class AccountProfileEditView(UpdateView):
+    model = Profile
+    template_name = 'account_profile_edit.html'
+    form_class = AccountProfileEditFrom
+
+    @property
+    def has_permission(self):
+        return self.user.is_active
+
+    def get_context_data(self, **kwargs):
+        context = super(AccountProfileEditView, self).get_context_data(**kwargs)
+        context["title"] = "User info update"
+        return context
+
+    def form_valid(self, form):
+        profile = form.save()
+        messages.success(self.request, 'Profile has been successfully updated.')
+        return super(AccountProfileEditView, self).form_valid(form)
+
+    def get_success_url(self):
+        if self.request.POST.get('_save'):
+            return reverse_lazy('account:account_profile_edit', kwargs={'pk': self.object.pk})
+        if self.request.POST.get('_continue'):
+            return reverse_lazy('account:account_user_edit', kwargs={'pk': self.object.user.pk})
+
+
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/account/login')
@@ -62,57 +116,6 @@ def user_logout(request):
 @login_required
 def account(request):
     return redirect('user_edit/')
-
-
-@login_required
-def edit_user(request):
-    if request.method == 'POST':
-        user_form = UserEditFrom(
-            instance=request.user,
-            data=request.POST
-        )
-        if user_form.is_valid():
-            user_form.save()
-            messages.success(request, 'User updated successfully')
-            return render(request,
-                          'account_edit_user.html',
-                          {'user_form': user_form})
-        else:
-            messages.error(request, 'Error updating your profile')
-            return render(request,
-                          'account_edit_user.html',
-                          {'user_form': user_form})
-    else:
-        user_form = UserEditFrom(instance=request.user)
-        return render(request,
-                      'account_edit_user.html',
-                      {'user_form': user_form})
-
-
-@login_required
-def edit_profile(request):
-    if request.method == 'POST':
-        profile_form = ProfileEditFrom(
-            instance=request.user.profile,
-            data=request.POST,
-            files=request.FILES
-        )
-        if profile_form.is_valid():
-            profile_form.save()
-            messages.success(request, 'Profile updated successfully')
-            return render(request,
-                          'account_edit_profile.html',
-                          {'profile_form': profile_form})
-        else:
-            messages.error(request, 'Error updating your profile')
-            return render(request,
-                          'account_edit_profile.html',
-                          {'profile_form': profile_form})
-    else:
-        profile_form = ProfileEditFrom(instance=request.user.profile)
-        return render(request,
-                      'account_edit_profile.html',
-                      {'profile_form': profile_form})
 
 
 @login_required

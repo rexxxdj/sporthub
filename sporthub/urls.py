@@ -26,8 +26,7 @@ from account import views as accountViews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('register/', accountViews.user_registration, name='register'),
-    path('forgot-password/', views.forgot_password, name='forgot-password'),
+    #path('forgot-password/', views.forgot_password, name='forgot-password'),
     path('account/', include('account.urls', namespace='account')),
 
     path('club/', views.ProfileListView.as_view(), name='club'),

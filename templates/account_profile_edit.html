@@ -21,11 +21,11 @@
                                 <form class="profile" action="." method="post" enctype="multipart/form-data">
                                     <div class="row">
                                         <div class="text-center">
-                                            {% if user.profile.photo.url is not null %}
-                                                <img class="rounded-circle mb-3 mt-4" src="{{ user.profile.photo.url }}" width="160" height="160">
+                                            {% if profile.photo.url is not null %}
+                                                <img class="rounded-circle mb-3 mt-4" src="{{ profile.photo.url }}" width="160" height="160">
                                             {% endif %}
                                             <br>
-                                            {{ profile_form.photo }}
+                                            {{ form.photo }}
                                         </div>
                                     </div>
                                     <hr>
@@ -33,13 +33,13 @@
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label" for="country"><strong>Country</strong></label>
-                                                {{ profile_form.country }}
+                                                {{ form.country }}
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label" for="city"><strong>City</strong></label>
-                                                {{ profile_form.city }}
+                                                {{ form.city }}
                                             </div>
                                         </div>
                                     </div>
@@ -47,7 +47,7 @@
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label" for="address"><strong>Address</strong></label>
-                                                {{ profile_form.address }}
+                                                {{ form.address }}
                                             </div>
                                         </div>
                                         <div class="col">
@@ -55,7 +55,7 @@
                                                 <label class="form-label" for="gender"><strong>Gender</strong></label>
                                                 <p>
                                                     <select name="gender" id="id_gender">
-                                                        <option value={{ profile_form.gender }}</option>
+                                                        <option value={{ form.gender }}</option>
                                                     </select>
                                                 </p>
                                             </div>
@@ -65,19 +65,26 @@
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label" for="phone"><strong>Phone Number</strong></label>
-                                                {{ profile_form.phone }}
+                                                {{ form.phone }}
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-3">
                                                 <label class="form-label" for="date_of_birth"><strong>Date of Birth</strong></label>
-                                                {{ profile_form.date_of_birth }}
+                                                {{ form.date_of_birth }}
                                             </div>
                                         </div>
                                     </div>
                                     {% csrf_token %}
-                                    <div class="mb-3 text-center">
-                                        <button class="btn btn-primary btn-sm" type="submit">Save Settings</button>
+                                    <div class="row">
+                                        <div class="col-sm-3 mb-3 mb-sm-0">
+                                        </div>
+                                        <div class="col-sm-3 mb-3 mb-sm-0">
+                                            <input class="default btn btn-primary d-block btn-user w-100"  type="submit" value="Save" name="_save">
+                                        </div>
+                                        <div class="col-sm-3 mb-3 mb-sm-0">
+                                            <input class="btn btn-primary d-block btn-user w-100" type="submit" value="Save and Edit User" name="_continue">
+                                        </div>
                                     </div>
                                 </form>
                             </div>
