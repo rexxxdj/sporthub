@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit User - KarateLog {% endblock title %}
+{% block activeclub %} active {% endblock activeclub %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col">
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 fw-bold">Edit User Settings</p>
+                            </div>
+                            <div class="card-body shadow">
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ form.errors }}
+                                    </div>
+                                {% endif %}
+                                <form class="user" action="." method="post">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="username"><strong>Username</strong></label>
+                                                {{ form.username }}
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="email"><strong>Email Address</strong></label>
+                                                {{ form.email }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="first_name"><strong>First Name</strong></label>
+                                                {{ form.first_name }}
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="last_name"><strong>Last Name</strong></label>
+                                                {{ form.last_name }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p>Account Permissions</p>
+                                    <div class="row mb-3">
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <label for="groups">Choose a Group:</label>
+                                        <select class="form-control" name="groups" id="groups" multiple>
+                                            {% for group in form.groups %}
+                                                {{ group  }}
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3 mb-3 mb-sm-0">
+                                        <p>Status:</p>
+                                        <p>
+                                            {{ form.is_active }}
+                                            <label for="id_is_active">Active</label><br>
+                                            {{ form.is_staff }}
+                                            <label for="id_is_staff">Staff Status</label><br>
+                                            {{ form.is_superuser }}
+                                            <label for="id_is_superuser">SuperUser Status</label><br>
+                                        </p>
+                                    </div>
+                                    {% csrf_token %}
+                                    <div class="mb-3 text-center">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save Settings</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

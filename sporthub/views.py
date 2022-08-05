@@ -28,5 +28,4 @@ class ProfileListView(ListView):
 
     def get_context_data(self):
         context = super(ProfileListView, self).get_context_data()
-        #context["profilecnt"] = Profile.objects.all().count()
         return context

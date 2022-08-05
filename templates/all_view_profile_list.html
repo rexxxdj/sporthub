@@ -20,6 +20,7 @@
                     <th scope="col" class="border-0 text-uppercase font-medium">Gender</th>
                     <th scope="col" class="border-0 text-uppercase font-medium">Degree</th>
                     <th scope="col" class="border-0 text-uppercase font-medium">Status</th>
+                    <th scope="col" class="border-0 text-uppercase font-medium">Permissions</th>
                     {% if user.is_staff %}
                         <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
                     {% endif %}
@@ -55,12 +56,20 @@
                             <span class="text-muted">{{status}}</span><br>
                         {% endfor %}
                     </td>
+                    <td>
+                        {% for group in profile.user.groups.all %}
+                            <span class="text-muted">{{group}}</span><br>
+                        {% endfor %}
+                    </td>
                     {% if user.is_staff %}
                         <td>
                             {% if perms.auth.change_user %}
-                                <button type="button" class="btn btn-outline-success btn-circle btn-lg btn-circle">
-                                    <i class="fa fa-edit"></i>
-                                </button>
+                                <a href="{% url 'account:admin_user_edit' profile.user.id %}">
+                                <!--<a href="/account/admin/user_edit/{{profile.user.id}}/">-->
+                                    <button type="button" class="btn btn-outline-success btn-circle btn-lg btn-circle">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </a>
                             {% endif %}
                             {% if perms.auth.delete_user %}
                                 <button type="button" class="btn btn-outline-danger btn-circle btn-lg btn-circle ml-2">

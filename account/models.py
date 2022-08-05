@@ -46,7 +46,7 @@ class Profile(models.Model):
     )
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        on_delete=models.PROTECT)
+        on_delete=models.CASCADE)
     country = models.CharField(
         max_length=50,
         blank=True,
