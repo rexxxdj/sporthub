@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import user_login, user_logout, account
-from .views import account_dashboard
+from .views import account_dashboard, ProfileListView
 from .views import AccountUserRegistrationView, AccountUserEditView, AccountProfileEditView
 from .views import AccountAdminUserRegistrationView, AccountAdminUserEditView, AccountAdminProfileEditView
 
@@ -16,7 +16,8 @@ urlpatterns = [
     path('user/<int:pk>/edit/', AccountUserEditView.as_view(), name='account_user_edit'),
     path('profile/<int:pk>/edit/', AccountProfileEditView.as_view(), name='account_profile_edit'),
 
-    path('dashboard/', account_dashboard, name='dashboard'),
+    path('dashboard/', account_dashboard, name='account_dashboard'),
+    path('profile_list/', ProfileListView.as_view(), name='profile_list'),
 
     path('admin/user_add/', AccountAdminUserRegistrationView.as_view(), name='admin_user_registration'),
     path('admin/user_edit/<int:pk>/', AccountAdminUserEditView.as_view(), name='admin_user_edit'),

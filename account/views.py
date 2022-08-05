@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group, Permission
+from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import LoginForm, AccountUserRegistrationForm, AccountUserEditForm, AccountProfileEditFrom
 from .forms import AdminUserRegistrationForm, AdminUserEditForm, AdminProfileEditForm
@@ -197,3 +198,17 @@ class AccountAdminProfileEditView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('account:admin_profile_edit', kwargs={'pk': self.object.pk})
+
+
+# All views
+class ProfileListView(ListView):
+    model = Profile
+    template_name = "all_view_profile_list.html"
+    paginate_by = 10
+
+    def get_queryset(self):
+        return super().get_queryset().exclude(profileType=4) #exclude Couch
+
+    def get_context_data(self):
+        context = super(ProfileListView, self).get_context_data()
+        return context

@@ -29,8 +29,6 @@ urlpatterns = [
     #path('forgot-password/', views.forgot_password, name='forgot-password'),
     path('account/', include('account.urls', namespace='account')),
 
-    path('club/', views.ProfileListView.as_view(), name='club'),
-
     path('settings/', views.settings, name='settings'),
 ]
 
