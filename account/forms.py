@@ -2,7 +2,7 @@ import datetime
 from django import forms
 from django.contrib.admin.widgets import AdminDateWidget
 from django.contrib.auth.models import User, Group, Permission
-from .models import Profile
+from .models import Profile, ProfileType
 
 
 # Account forms
@@ -262,18 +262,6 @@ class AdminUserEditForm(forms.ModelForm):
     is_active = forms.BooleanField(required=False)
     is_staff = forms.BooleanField(required=False)
     is_superuser = forms.BooleanField(required=False)
-    '''date_joined = forms.DateField(
-        initial=datetime.date.today,
-        required=False,
-        widget=forms.DateInput(
-            format=('%Y-%m-%d'),
-            attrs={
-                'class': 'form-control form-control-user',
-                'type': 'hidden',
-                'placeholder': 'Select a Date of Registration',
-                'name': 'date_joined'
-            }
-        ))'''
 
     class Meta:
         model = User
@@ -299,3 +287,51 @@ class AdminUserEditForm(forms.ModelForm):
                                                        'name': 'last_name',
                                                        'placeholder': 'Last Name'})
         self.fields['groups'].empty_label = None
+
+
+class AdminProfileEditForm(forms.ModelForm):
+    date_of_birth = forms.DateField(
+        required=False,
+        widget=forms.DateInput(
+            format=('%Y-%m-%d'),
+            attrs={
+                'class': 'form-control form-control-user',
+                'type': 'date',
+                'placeholder': 'Select a Date of Birth',
+                'name': 'date_of_birth'
+            }
+        ))
+
+    class Meta:
+        model = Profile
+        fields = ['country', 'city', 'address', 'gender', 'phone', 'degree', 'profileType', 'date_of_birth', 'photo']
+
+    def __init__(self, *args, **kwargs):
+        super(AdminProfileEditForm, self).__init__(*args, **kwargs)
+        self.fields['country'].widget.attrs.update({'class': 'form-control form-control-user',
+                                                     'type': 'text',
+                                                     'name': 'country',
+                                                     'placeholder': 'Country'})
+        self.fields['city'].widget.attrs.update({'class': 'form-control form-control-user',
+                                                     'type': 'text',
+                                                     'name': 'city',
+                                                     'placeholder': 'City'})
+        self.fields['address'].widget.attrs.update({'class': 'form-control form-control-user',
+                                                     'type': 'text',
+                                                     'name': 'address',
+                                                     'placeholder': 'Address'})
+        self.fields['gender'].widget.attrs.update({'class': 'form-control form-control-user',
+                                                     'type': 'text',
+                                                     'name': 'gender',
+                                                     'placeholder': 'Gender'})
+        self.fields['phone'].widget.attrs.update({'class': 'form-control form-control-user',
+                                                     'type': 'text',
+                                                     'name': 'phone',
+                                                     'placeholder': 'Phone number'})
+        self.fields['degree'].widget.attrs.update({'class': 'form-control form-control-user',
+                                                     'type': 'text',
+                                                     'name': 'degree',
+                                                     'placeholder': 'Degree'})
+        self.fields['gender'].empty_label = None
+        self.fields['degree'].empty_label = None
+        self.fields['profileType'].empty_label = None

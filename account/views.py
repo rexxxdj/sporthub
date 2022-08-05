@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group, Permission
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .forms import LoginForm, RegistrationForm, UserEditFrom, ProfileEditFrom
-from .forms import AdminUserRegistrationForm, AdminUserEditForm
+from .forms import AdminUserRegistrationForm, AdminUserEditForm, AdminProfileEditForm
 from .models import Profile
 
 
@@ -147,7 +147,7 @@ class AccountAdminUserRegistrationView(CreateView):
         if self.request.POST.get('_addanother'):
             return reverse_lazy('account:admin_user_registration')
         if self.request.POST.get('_continue'):
-            return reverse_lazy('account:admin_profile_edit', kwargs={'pk': self.object.pk})
+            return reverse_lazy('account:admin_profile_edit', kwargs={'pk': self.object.profile.pk})
 
 
 class AccountAdminUserEditView(UpdateView):
@@ -171,3 +171,26 @@ class AccountAdminUserEditView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('account:admin_user_edit', kwargs={'pk': self.object.pk})
+
+
+class AccountAdminProfileEditView(UpdateView):
+    model = Profile
+    template_name = 'admin_profile_edit.html'
+    form_class = AdminProfileEditForm
+
+    @property
+    def has_permission(self):
+        return self.user.is_active and self.user.is_staff
+
+    def get_context_data(self, **kwargs):
+        context = super(AccountAdminProfileEditView, self).get_context_data(**kwargs)
+        context["title"] = "User info update"
+        return context
+
+    def form_valid(self, form):
+        profile = form.save()
+        messages.success(self.request, 'Profile for User {} has been successfully updated.'.format(profile.fullname()))
+        return super(AccountAdminProfileEditView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('account:admin_profile_edit', kwargs={'pk': self.object.pk})

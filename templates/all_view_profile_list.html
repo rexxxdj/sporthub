@@ -65,7 +65,6 @@
                         <td>
                             {% if perms.auth.change_user %}
                                 <a href="{% url 'account:admin_user_edit' profile.user.id %}">
-                                <!--<a href="/account/admin/user_edit/{{profile.user.id}}/">-->
                                     <button type="button" class="btn btn-outline-success btn-circle btn-lg btn-circle">
                                         <i class="fa fa-edit"></i>
                                     </button>

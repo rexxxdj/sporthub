@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Edit Profile - KarateLog {% endblock title %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col">
+                        <div class="card shadow mb-3">
+                            <div class="card-header py-3">
+                                <p class="text-primary m-0 fw-bold">Edit Profile Settings</p>
+                            </div>
+                            <div class="card-body shadow">
+                                {% if form.errors %}
+                                    <div class="alert alert-danger">
+                                        {{ form.errors }}
+                                    </div>
+                                {% endif %}
+                                <form class="profile" action="." method="post" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="text-center">
+                                            {% if form.instance.photo %}
+                                                <img class="rounded-circle mb-3 mt-4" src="{{ form.instance.photo.url }}" width="160" height="160">
+                                            {% else %}
+                                                <img class="rounded-circle mb-3 mt-4" src="{%static "img/avatars/nophoto.jpeg" %}">
+                                            {% endif %}
+                                            <br>
+                                            {{ form.photo }}
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="country"><strong>Country</strong></label>
+                                                {{ form.country }}
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="city"><strong>City</strong></label>
+                                                {{ form.city }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="address"><strong>Address</strong></label>
+                                                {{ form.address }}
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="phone"><strong>Phone Number</strong></label>
+                                                {{ form.phone }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="date_of_birth"><strong>Date of Birth</strong></label>
+                                                {{ form.date_of_birth }}
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col-sm-2 mb-2 mb-sm-0">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="gender"><strong>Gender</strong></label>
+                                                        <p>
+                                                            <select name="gender" id="id_gender">
+                                                                {% for gender in form.gender %}
+                                                                    {{ gender  }}
+                                                                {% endfor %}
+                                                            </select>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 mb-6 mb-sm-0">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="degree"><strong>Degree</strong></label>
+                                                        <p>
+                                                            <select name="degree" id="id_degree">
+                                                                {% for degree in form.degree %}
+                                                                    {{ degree  }}
+                                                                {% endfor %}
+                                                            </select>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4 mb-4 mb-sm-0">
+                                                    <div class="mb-3">
+                                                        <label class="form-label" for="profileType"><strong>Profile Type</strong></label>
+                                                        <p>
+                                                            <select class="form-control" onfocus='this.size=6;' name="profileType" id="profileType" multiple>
+                                                                {% for profileType in form.profileType %}
+                                                                    {{ profileType  }}
+                                                                {% endfor %}
+                                                            </select>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% csrf_token %}
+                                    <div class="mb-3 text-center">
+                                        <button class="btn btn-primary btn-sm" type="submit">Save Profile</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
