@@ -68,14 +68,14 @@
                     {% if user.is_staff %}
                         <td>
                             {% if perms.auth.change_user %}
-                                <a href="{% url 'account:admin_user_edit' profile.user.id %}">
+                                <a href="{% url 'account:staff_user_update' profile.user.id %}">
                                     <button type="button" class="btn btn-outline-success btn-circle btn-lg btn-circle">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                 </a>
                             {% endif %}
                             {% if perms.auth.delete_user %}
-                                <a href="{% url 'account:admin_user_delete' profile.user.id %}">
+                                <a href="{% url 'account:staff_user_delete' profile.user.id %}">
                                     <button type="button" class="btn btn-outline-danger btn-circle btn-lg btn-circle ml-2">
                                         <i class="fa fa-trash"></i>
                                     </button>
@@ -95,7 +95,7 @@
     <br>
     <div class="row">
         {% if perms.auth.add_user %}
-        <a href="{% url 'account:admin_user_registration' %}">
+        <a href="{% url 'account:staff_user_signup' %}">
             <button type="button" class="btn btn-outline-success btn-circle btn-lg btn-circle">
                 <i class="fa fa-plus"></i>
             </button>

@@ -7,11 +7,11 @@ from events.models import Event
 
 
 def index(request):
-    return redirect('account/login')
+    return redirect('account/signin')
 
 
 def forgot_password(request):
-    return render(request, 'auth_forgot-password.html', {})
+    return render(request, 'forgot-password.html', {})
 
 
 def settings(request):

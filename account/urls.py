@@ -1,26 +1,21 @@
 from django.urls import path
-from .views import user_login, user_logout, account
-from .views import account_dashboard, ProfileListView
-from .views import AccountUserRegistrationView, AccountUserEditView, AccountProfileEditView
-from .views import AccountAdminUserRegistrationView, AccountAdminUserEditView, AccountAdminProfileEditView, AccountAdminUserDeleteView
-
-
+from . import views
 
 app_name = 'account'
 urlpatterns = [
-    path('registration/', AccountUserRegistrationView.as_view(), name='account_user_registration'),
-    path('login/', user_login, name='account_user_login'),
-    path('logout/', user_logout, name='logout'),
-    path('', account, name='account'),
+    path('', views.account, name='account'),
+    path('signup/', views.SignUpView.as_view(), name='signup'),
+    path('signin/', views.user_login, name='signin'),
+    path('signout/', views.user_logout, name='signout'),
+    path('dashboard/', views.dashboard, name='dashboard'),
 
-    path('user/<int:pk>/edit/', AccountUserEditView.as_view(), name='account_user_edit'),
-    path('profile/<int:pk>/edit/', AccountProfileEditView.as_view(), name='account_profile_edit'),
+    path('list/', views.ProfileListView.as_view(), name='list'),
 
-    path('dashboard/', account_dashboard, name='account_dashboard'),
-    path('profile_list/', ProfileListView.as_view(), name='profile_list'),
+    path('user/<int:pk>/update/', views.UserUpdateView.as_view(), name='update'),
+    path('profile/<int:pk>/update/', views.ProfileUpdateView.as_view(), name='profile_update'),
 
-    path('admin/user/add/', AccountAdminUserRegistrationView.as_view(), name='admin_user_registration'),
-    path('admin/user/<int:pk>/edit/', AccountAdminUserEditView.as_view(), name='admin_user_edit'),
-    path('admin/profile/<int:pk>/edit/', AccountAdminProfileEditView.as_view(), name='admin_profile_edit'),
-    path('admin/user/<int:pk>/delete/', AccountAdminUserDeleteView.as_view(), name='admin_user_delete')
+    path('staff/user/signup/', views.StaffUserSignUpView.as_view(), name='staff_user_signup'),
+    path('staff/user/<int:pk>/update/', views.StaffUserUpdateView.as_view(), name='staff_user_update'),
+    path('staff/profile/<int:pk>/update/', views.StaffProfileUpdateView.as_view(), name='staff_profile_update'),
+    path('staff/user/<int:pk>/delete/', views.StaffUserDeleteView.as_view(), name='staff_user_delete')
 ]

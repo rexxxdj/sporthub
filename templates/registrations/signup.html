@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                             {% csrf_token %}
-                            <button class="btn btn-primary d-block btn-user w-100" type="submit">Register Account</button>
+                            <button class="btn btn-primary d-block btn-user w-100" type="submit">Register Me</button>
                             <!--
                             <hr>
                                 <a class="btn btn-primary d-block btn-google btn-user w-100 mb-2" role="button"><i class="fab fa-google"></i>&nbsp; Register with Google</a>
@@ -55,7 +55,7 @@
                         </form>
                         <hr>
                         <div class="text-center"><a class="small" href="/forgot-password">Forgot Password?</a></div>
-                        <div class="text-center"><a class="small" href="{% url 'account:account_user_login' %}">Already have an account? Login!</a></div>
+                        <div class="text-center"><a class="small" href="{% url 'account:signin' %}">Already have an account? SignIn!</a></div>
                     </div>
                 </div>
             </div>
