@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}Edit User - KarateLog {% endblock title %}
-{% block activeclub %} active {% endblock activeclub %}
+{% block activeaccountlist %} active {% endblock activeaccountlist %}
 {% block content %}
     <div class="container-fluid">
         <div class="row mb-3">
@@ -70,8 +70,15 @@
                                         </p>
                                     </div>
                                     {% csrf_token %}
-                                    <div class="mb-3 text-center">
-                                        <button class="btn btn-primary btn-sm" type="submit">Save Settings</button>
+                                    <div class="row">
+                                        <div class="col-sm-3 mb-3 mb-sm-0">
+                                        </div>
+                                        <div class="col-sm-3 mb-3 mb-sm-0">
+                                            <input class="default btn btn-primary d-block btn-user w-100"  type="submit" value="Save" name="_save">
+                                        </div>
+                                        <div class="col-sm-3 mb-3 mb-sm-0">
+                                            <input class="btn btn-primary d-block btn-user w-100" type="submit" value="Save and Edit Profile" name="_continue">
+                                        </div>
                                     </div>
                                 </form>
                             </div>

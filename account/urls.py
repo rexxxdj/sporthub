@@ -2,7 +2,7 @@ from django.urls import path
 from .views import user_login, user_logout, account
 from .views import account_dashboard, ProfileListView
 from .views import AccountUserRegistrationView, AccountUserEditView, AccountProfileEditView
-from .views import AccountAdminUserRegistrationView, AccountAdminUserEditView, AccountAdminProfileEditView
+from .views import AccountAdminUserRegistrationView, AccountAdminUserEditView, AccountAdminProfileEditView, AccountAdminUserDeleteView
 
 
 
@@ -19,8 +19,8 @@ urlpatterns = [
     path('dashboard/', account_dashboard, name='account_dashboard'),
     path('profile_list/', ProfileListView.as_view(), name='profile_list'),
 
-    path('admin/user_add/', AccountAdminUserRegistrationView.as_view(), name='admin_user_registration'),
-    path('admin/user_edit/<int:pk>/', AccountAdminUserEditView.as_view(), name='admin_user_edit'),
-    path('admin/profile_edit/<int:pk>/', AccountAdminProfileEditView.as_view(), name='admin_profile_edit'),
-    #path('admin/profile_edit/', views.account_admin_edit_profile, name='admin_edit_profile'),
+    path('admin/user/add/', AccountAdminUserRegistrationView.as_view(), name='admin_user_registration'),
+    path('admin/user/<int:pk>/edit/', AccountAdminUserEditView.as_view(), name='admin_user_edit'),
+    path('admin/profile/<int:pk>/edit/', AccountAdminProfileEditView.as_view(), name='admin_profile_edit'),
+    path('admin/user/<int:pk>/delete/', AccountAdminUserDeleteView.as_view(), name='admin_user_delete')
 ]

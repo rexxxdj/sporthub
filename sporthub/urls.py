@@ -28,6 +28,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     #path('forgot-password/', views.forgot_password, name='forgot-password'),
     path('account/', include('account.urls', namespace='account')),
+    path('events/', include('events.urls', namespace='events')),
 
     path('settings/', views.settings, name='settings'),
 ]

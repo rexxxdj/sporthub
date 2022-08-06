@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}Club{% endblock title %}
-{% block activeclub %} active {% endblock activeclub %}
+{% block activeaccountlist %} active {% endblock activeaccountlist %}
 {% block content %}
 <div class="container-fluid">
     <div class="card">
@@ -75,12 +75,14 @@
                                 </a>
                             {% endif %}
                             {% if perms.auth.delete_user %}
-                                <button type="button" class="btn btn-outline-danger btn-circle btn-lg btn-circle ml-2">
-                                    <i class="fa fa-trash"></i>
-                                </button>
+                                <a href="{% url 'account:admin_user_delete' profile.user.id %}">
+                                    <button type="button" class="btn btn-outline-danger btn-circle btn-lg btn-circle ml-2">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </a>
                             {% endif %}
-                            <button type="button" class="btn btn-outline-info btn-circle btn-lg btn-circle ml-2">
-                                <i class="fa fa-upload"></i>
+                            <button type="button" class="btn btn-outline-primary btn-circle btn-lg btn-circle ml-2">
+                                <i class="fa fa-download"></i>
                             </button>
                         </td>
                     {% endif %}
@@ -93,7 +95,7 @@
     <br>
     <div class="row">
         {% if perms.auth.add_user %}
-        <a href="/account/admin/user_add">
+        <a href="{% url 'account:admin_user_registration' %}">
             <button type="button" class="btn btn-outline-success btn-circle btn-lg btn-circle">
                 <i class="fa fa-plus"></i>
             </button>

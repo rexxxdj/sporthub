@@ -5,12 +5,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 
 
 class ProfileType(models.Model):
-    typeName = models.CharField(
-        max_length=15,
-        blank=False,
-        null=False,
-        verbose_name='Profile Type'
-    )
+    typeName = models.CharField(max_length=15, blank=False, null=False, verbose_name='Profile Type')
 
     def __str__(self):
         return self.typeName
@@ -44,54 +39,16 @@ class Profile(models.Model):
         (u"1st Dan (Kyūdan)", u"9th Dan – The black belt has nine gold stripes"),
         (u"1st Dan (Jūdan)", u"10th Dan – The black belt has ten gold stripes")
     )
-    user = models.OneToOneField(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE)
-    country = models.CharField(
-        max_length=50,
-        blank=True,
-        null=True
-    )
-    city = models.CharField(
-        max_length=50,
-        blank=True,
-        null=True
-    )
-    address = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True
-    )
-    gender = models.CharField(
-        max_length=2,
-        choices=GENDER_CHOICES,
-        blank=True,
-        null=True
-    )
-    phone = PhoneNumberField(
-        blank=True,
-        null=True,
-        unique=True
-    )
-    date_of_birth = models.DateField(
-        blank=True,
-        null=True
-    )
-    photo = models.ImageField(
-        upload_to='users/%Y/%m/%d',
-        blank=True
-    )
-    degree = models.CharField(
-        max_length=20,
-        choices=DEGREE_CHOICES,
-        blank=True,
-        null=True
-    )
-    profileType = models.ManyToManyField(
-        ProfileType,
-        null=True,
-        blank=True
-    )
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    country = models.CharField(max_length=50, blank=True, null=True)
+    city = models.CharField(max_length=50, blank=True, null=True)
+    address = models.CharField(max_length=100, blank=True, null=True)
+    gender = models.CharField(max_length=2, choices=GENDER_CHOICES, blank=True, null=True)
+    phone = PhoneNumberField(blank=True, null=True, unique=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
+    degree = models.CharField(max_length=20, choices=DEGREE_CHOICES, blank=True, null=True)
+    profileType = models.ManyToManyField(ProfileType, null=True, blank=True)
 
     def __str__(self):
         return 'Profile for user {}'.format(self.user.username)

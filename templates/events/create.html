@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Create New Event {% endblock title %}
+{% block activeevents %} active {% endblock activeevents %}
+{% block content %}
+    <div class="card shadow-lg o-hidden border-0 my-5">
+        <div class="card-body p-0">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h4 class="text-dark mb-4">Create a New Event!</h4>
+                        </div>
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                {{ form.errors }}
+                            </div>
+                        {% endif %}
+                        <form class="user" action="." method="post">
+                            <div class="row mb-12">
+                                <div class="col-sm-6 mb-6 mb-sm-0">
+                                    <div class="row">
+                                        <div class="col-sm-12 mb-12 mb-sm-0">
+                                            {{ form.title }}
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm-4 mb-4 mb-sm-0">
+                                            <label style="display: block; text-align: center" for="start_date">Event Start Date:</label>
+                                            {{ form.start_date }}
+                                        </div>
+                                        <div class="col-sm-4 mb-4 mb-sm-0">
+                                            <label style="display: block; text-align: center" for="end_date">Event End Date:</label>
+                                            {{ form.end_date }}
+                                        </div>
+                                        <div class="col-sm-4 mb-4 mb-sm-0">
+                                            <label style="display: block; text-align: center" for="subscribe_date">Last Subscribe Date:</label>
+                                            {{ form.subscribe_date }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 mb-6 mb-sm-0">
+                                    <div class="col-sm-12 mb-12 mb-sm-0">
+                                        {{ form.description }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% csrf_token %}
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-3 mb-3 mb-sm-0">
+                                </div>
+                                <div class="col-sm-3 mb-3 mb-sm-0">
+                                    <input class="default btn btn-primary d-block btn-user w-100"  type="submit" value="Save" name="_save">
+                                </div>
+                                <div class="col-sm-3 mb-3 mb-sm-0">
+                                    <input class="btn btn-primary d-block btn-user w-100" type="submit" value="Save and add another" name="_addanother">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

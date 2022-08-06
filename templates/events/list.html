@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Events{% endblock title %}
+{% block activeevents %} active {% endblock activeevents %}
+{% block content %}
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title text-uppercase mb-0">Events</h5>
+        </div>
+        <div class="table-responsive">
+            <div id="sampleTable_wrapper" class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-hover table-bordered dataTable no-footer" id="sampleTable" role="grid" aria-describedby="sampleTable_info">
+                            <thead>
+                            <tr role="row">
+                                <th style="width: 30px;">#</th>
+                                <th scope="col" class="border-0 text-uppercase font-medium">Event Name</th>
+                                <th scope="col" class="border-0 text-uppercase font-medium">Start Date</th>
+                                <th scope="col" class="border-0 text-uppercase font-medium">End Date</th>
+                                <th scope="col" class="border-0 text-uppercase font-medium">Subscribe Date</th>
+                                {% if user.is_staff %}
+                                    <th scope="col" class="border-0 text-uppercase font-medium">Manage</th>
+                                {% endif %}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for event in object_list %}
+                            <tr role="row" class="odd">
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ event.title }}</td>
+                                <td>{{ event.start_date }}</td>
+                                <td>{{ event.end_date }}</td>
+                                <td>{{ event.subscribe_date }}</td>
+                                {% if user.is_staff %}
+                                <td>
+                                    {% if user.is_staff %}
+                                        {% if perms.auth.change_user %}
+                                            <a href="{% url 'events:update' event.id %}">
+                                                <button type="button" class="btn btn-outline-success btn-circle btn-lg btn-circle">
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                            </a>
+                                        {% endif %}
+                                        {% if perms.auth.delete_user %}
+                                        <a href="{% url 'events:delete' event.id %}">
+                                            <button type="button" class="btn btn-outline-danger btn-circle btn-lg btn-circle ml-2">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </a>
+                                    {% endif %}
+                                        <button type="button" class="btn btn-outline-primary btn-circle btn-lg btn-circle ml-2">
+                                            <i class="fa fa-download"></i>
+                                        </button>
+                                    {% endif %}
+                                </td>
+                            {% endif %}
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        {% if perms.auth.add_user %}
+        <a href="{% url 'events:create' %}">
+            <button type="button" class="btn btn-outline-primary btn-circle btn-lg btn-circle">
+                <i class="fa fa-plus"></i>
+            </button>
+        </a>
+        {% endif %}
+    </div>
+    {% include "include/paginator_include.html" with page=page %}
+</div>
+{% endblock content %}
+

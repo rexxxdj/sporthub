@@ -35,7 +35,7 @@ class AccountUserRegistrationView(CreateView):
         return super(AccountUserRegistrationView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('account:account_profile_edit')
+        return reverse_lazy('account:account_profile_edit', kwargs={'pk': self.object.profile.pk})
 
 
 def user_login(request):
@@ -147,7 +147,7 @@ class AccountAdminUserRegistrationView(CreateView):
 
     def get_success_url(self):
         if self.request.POST.get('_save'):
-            return reverse_lazy('club')
+            return reverse_lazy('account:profile_list')
         if self.request.POST.get('_addanother'):
             return reverse_lazy('account:admin_user_registration')
         if self.request.POST.get('_continue'):
@@ -174,7 +174,10 @@ class AccountAdminUserEditView(UpdateView):
         return super(AccountAdminUserEditView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy('account:admin_user_edit', kwargs={'pk': self.object.pk})
+        if self.request.POST.get('_save'):
+            return reverse_lazy('account:admin_user_edit', kwargs={'pk': self.object.pk})
+        if self.request.POST.get('_continue'):
+            return reverse_lazy('account:admin_profile_edit', kwargs={'pk': self.object.profile.pk})
 
 
 class AccountAdminProfileEditView(UpdateView):
@@ -198,6 +201,22 @@ class AccountAdminProfileEditView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('account:admin_profile_edit', kwargs={'pk': self.object.pk})
+
+
+class AccountAdminUserDeleteView(DeleteView):
+    model = User
+    template_name = 'admin_user_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse_lazy('account:profile_list')
+
+    def post(self, request, *args, **kwargs):
+        if self.request.POST.get('_cancel'):
+            url = self.get_success_url()
+            return HttpResponseRedirect(url)
+        else:
+            return super(AccountAdminUserDeleteView, self).post(request, *args, **kwargs)
+
 
 
 # All views

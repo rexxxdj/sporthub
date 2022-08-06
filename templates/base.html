@@ -29,9 +29,15 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% block activeclub %}{% endblock activeclub%}" href="{% url 'account:profile_list' %}">
+                        <a class="nav-link {% block activeaccountlist %}{% endblock activeaccountlist%}" href="{% url 'account:profile_list' %}">
                             <i class="fas fa-table"></i>
                             <span>My Club</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% block activeevents %}{% endblock activeevents%}" href="{% url 'events:list' %}">
+                            <i class="fas fa-calendar"></i>
+                            <span>Events</span>
                         </a>
                     </li>
                 </ul>
@@ -97,7 +103,9 @@
                                                 <div class="bg-success status-indicator"></div>
                                             </div>
                                             <div class="fw-bold">
-                                                <div class="text-truncate"><span>Hi there! I am wondering if you can help me with a problem I've been having.</span></div>
+                                                <div class="text-truncate">
+                                                    <span>Hi there! I am wondering if you can help me with a problem I've been having.</span>
+                                                </div>
                                                 <p class="small text-gray-500 mb-0">Emily Fowler - 58m</p>
                                             </div>
                                         </a>
@@ -107,7 +115,9 @@
                                                 <div class="status-indicator"></div>
                                             </div>
                                             <div class="fw-bold">
-                                                <div class="text-truncate"><span>I have the photos that you ordered last month!</span></div>
+                                                <div class="text-truncate">
+                                                    <span>I have the photos that you ordered last month!</span>
+                                                </div>
                                                 <p class="small text-gray-500 mb-0">Jae Chun - 1d</p>
                                             </div>
                                         </a>
@@ -123,12 +133,14 @@
                                                 <p class="small text-gray-500 mb-0">Morgan Alvarez - 2d</p>
                                             </div>
                                         </a><a class="dropdown-item d-flex align-items-center" href="#">
-                                            <div class="dropdown-list-image me-3"><img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
+                                            <div class="dropdown-list-image me-3">
+                                                <img class="rounded-circle" src="assets/img/avatars/avatar5.jpeg">
                                                 <div class="bg-success status-indicator"></div>
                                             </div>
                                             <div class="fw-bold">
                                                 <div class="text-truncate">
-                                                    <span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span></div>
+                                                    <span>Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</span>
+                                                </div>
                                                 <p class="small text-gray-500 mb-0">Chicken the Dog · 2w</p>
                                             </div>
                                         </a>
