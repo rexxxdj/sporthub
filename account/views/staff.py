@@ -40,6 +40,7 @@ class StaffUserUpdateView(UpdateView):
     model = User
     template_name = 'staff/user_update.html'
     form_class = StaffUserUpdateForm
+    context_object_name = 'other_user'
 
     @property
     def has_permission(self):
@@ -65,6 +66,7 @@ class StaffProfileUpdateView(UpdateView):
     model = Profile
     template_name = 'staff/profile_update.html'
     form_class = StaffProfileUpdateForm
+    context_object_name = 'other_profile'
 
     @property
     def has_permission(self):
@@ -86,6 +88,7 @@ class StaffProfileUpdateView(UpdateView):
 class StaffUserDeleteView(DeleteView):
     model = User
     template_name = 'staff/user_confirm_delete.html'
+    context_object_name = 'other_user'
 
     def get_success_url(self):
         return reverse_lazy('account:list')

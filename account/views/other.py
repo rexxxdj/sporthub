@@ -5,6 +5,7 @@ from ..models import Profile
 class ProfileListView(ListView):
     model = Profile
     template_name = "other/profile_list.html"
+    ordering = ['user__last_name', 'user__first_name']
     paginate_by = 10
 
     def get_queryset(self):
