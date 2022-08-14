@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Event Detail{% endblock title %}
+{% block extra_css %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Actor">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+<link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+<link rel="stylesheet" href="assets/css/article-nice.css">
+{% endblock extra_css %}
+{% block activeevents %} active {% endblock activeevents %}
+{% block content %}
+    <div class="container-fluid">
+        <section class="article-dual-column">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 offset-md-1">
+                        <div class="intro">
+                            <h1 class="text-center" id="inceput-1">{{event.title}}</h1>
+                            <p class="text-center"> </p>
+                            <div class="text-center">
+                                <img class="img-fluid" src="{{event.photo.url}}" style="width: 670px;height: 434.388px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10 col-lg-3 offset-md-1">
+                        <div class="toc">
+                            <p>More info:</p>
+                            <ul>
+                                <li>Country: {{event.country}}</li>
+                                <li>City: {{event.city}}</li>
+                                <li>Start: {{event.start_date|date:'d.m.Y'}}</li>
+                                <li>End: {{event.end_date|date:'d.m.Y'}}</li>
+                                <li>Subscribe to: {{event.subscribe_date|date:'d.m.Y'}}</li>
+                                {% if event.attachment %}
+                                    <li>Download info: <a href="{{ event.attachment.url }}" download>Download</a> </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-10 col-lg-7 offset-md-1 offset-lg-0">
+                        <div class="text">
+                            <p style="font-family: Roboto, sans-serif;"><br>
+                                <em>{{event.description}}</em>
+                                <br>
+                            </p>
+                            <p style="font-family: Roboto, sans-serif;"><br>
+                                <em>{{event.notes}}</em>
+                                <br>
+                            </p>
+                            <h2 id="detaliitehnice-2">Subscriber:</h2>
+                            <p style="font-family: Roboto, sans-serif;">
+                                {% if subscriber %}
+                                    {% for sub in subscriber %}
+                                        {{sub.fullname}},
+                                    {% endfor %}
+                                {% else %}
+                                        None
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock content %}

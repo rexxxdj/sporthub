@@ -16,12 +16,11 @@ Including another URLconf
 from _curses_panel import panel
 
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.conf import settings
 from django.conf.urls.static import static
+from django.urls import path, include, re_path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from . import settings
 from . import views
-from account import views as accountViews
 
 urlpatterns = [
     path('admin/', admin.site.urls),

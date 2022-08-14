@@ -3,7 +3,7 @@ from django.views.generic import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 
-from events.models import Event
+#from eventcalendar.models import Event
 
 
 def index(request):
@@ -23,12 +23,13 @@ class DashboardView(LoginRequiredMixin, View):
     template_name = "calendarapp/dashboard.html"
 
     def get(self, request, *args, **kwargs):
-        events = Event.objects.get_all_events(user=request.user)
-        running_events = Event.objects.get_running_events(user=request.user)
-        latest_events = Event.objects.filter(user=request.user).order_by("-id")[:10]
-        context = {
-            "total_event": events.count(),
-            "running_events": running_events,
-            "latest_events": latest_events,
-        }
+        #events = Event.objects.get_all_events(user=request.user)
+        #running_events = Event.objects.get_running_events(user=request.user)
+        #latest_events = Event.objects.filter(user=request.user).order_by("-id")[:10]
+        #context = {
+        #    "total_event": events.count(),
+        #    "running_events": running_events,
+        #    "latest_events": latest_events,
+        #}
+        context = {}
         return render(request, self.template_name, context)

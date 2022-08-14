@@ -2,7 +2,7 @@ from datetime import datetime
 from django.db import models
 from django.urls import reverse
 
-from events.models import EventAbstract
+from .event_abstract import EventAbstract
 from django.contrib.auth.models import User
 
 
@@ -29,10 +29,15 @@ class EventManager(models.Manager):
 class Event(EventAbstract):
     """ Event model """
     title = models.CharField(max_length=200, unique=True)
+    country = models.CharField(max_length=25, default='Ukraine')
+    city = models.CharField(max_length=25,default='Kharkiv')
     description = models.TextField()
     start_date = models.DateField()
     end_date = models.DateField()
     subscribe_date = models.DateField()
+    notes = models.TextField(blank=True)
+    photo = models.ImageField(upload_to='events/img/', blank=True)
+    attachment = models.FileField(upload_to='events/att/', blank=True)
 
     objects = EventManager()
 

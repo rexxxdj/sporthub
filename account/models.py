@@ -46,9 +46,9 @@ class Profile(models.Model):
     gender = models.CharField(max_length=2, choices=GENDER_CHOICES, blank=True, null=True)
     phone = PhoneNumberField(blank=True, null=True, unique=True)
     date_of_birth = models.DateField(blank=True, null=True)
-    photo = models.ImageField(upload_to='users/%Y/%m/%d', blank=True)
+    photo = models.ImageField(upload_to='media/users/avatars/%Y/%m/%d', blank=True)
     degree = models.CharField(max_length=20, choices=DEGREE_CHOICES, blank=True, null=True)
-    profileType = models.ManyToManyField(ProfileType, null=True, blank=True)
+    profileType = models.ManyToManyField(ProfileType)
 
     def __str__(self):
         return 'Profile for user {}'.format(self.user.username)

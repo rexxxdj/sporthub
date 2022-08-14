@@ -1,5 +1,5 @@
 from django.forms import ModelForm, DateInput
-from events.models import Event
+from .models import Event
 from django import forms
 
 
@@ -25,9 +25,12 @@ class EventUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ['title', 'description', 'start_date', 'end_date', 'subscribe_date']
+        fields = ['title', 'description', 'start_date', 'end_date', 'subscribe_date', 'country', 'city', 'notes', 'photo', 'attachment']
 
     def __init__(self, *args, **kwargs):
         super(EventUpdateForm, self).__init__(*args, **kwargs)
         self.fields['title'].widget.attrs.update({'class': 'form-control form-control-user', 'type': 'text', 'name': 'title', 'placeholder': 'Title'})
         self.fields['description'].widget.attrs.update({'style': 'height: 400px; border-radius: 2rem;', 'class': 'form-control form-control-user', 'type': 'text', 'name': 'description', 'placeholder': 'Description'})
+        self.fields['country'].widget.attrs.update({'class': 'form-control form-control-user', 'type': 'text', 'name': 'country', 'placeholder': 'Country'})
+        self.fields['city'].widget.attrs.update({'class': 'form-control form-control-user', 'type': 'text', 'name': 'city', 'placeholder': 'City'})
+        self.fields['notes'].widget.attrs.update({'style': 'height: 400px; border-radius: 2rem;', 'class': 'form-control form-control-user', 'type': 'text', 'name': 'notes', 'placeholder': 'Notes'})

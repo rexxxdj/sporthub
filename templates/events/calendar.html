@@ -40,12 +40,14 @@
                             <tbody>
                             {% for event in object_list %}
                             <tr role="row" class="odd">
-                                    <td><a class="link-unstyled" href="{% url 'events:detail' event.id %}"> {{ forloop.counter }}</a></td>
-                                    <td><a class="link-unstyled" href="{% url 'events:detail' event.id %}"> {{ event.title }}</a></td>
-                                    <td><a class="link-unstyled" href="{% url 'events:detail' event.id %}"> {{ event.start_date }}</a></td>
-                                    <td><a class="link-unstyled" href="{% url 'events:detail' event.id %}"> {{ event.end_date }}</a></td>
-                                    <td><a class="link-unstyled" href="{% url 'events:detail' event.id %}"> {{ event.subscribe_date }}</a></td>
-                                    {% if user.is_staff %}
+                                    <td>{{ forloop.counter }}</td>
+                                <a href="{% url 'events:update' event.id %}">
+                                    <td>{{ event.title }}</td>
+                                </a>
+                                    <td>{{ event.start_date }}</td>
+                                    <td>{{ event.end_date }}</td>
+                                    <td>{{ event.subscribe_date }}</td>
+                                {% if user.is_staff %}
                                 <td>
                                     {% if user.is_staff %}
                                         {% if perms.auth.change_user %}
